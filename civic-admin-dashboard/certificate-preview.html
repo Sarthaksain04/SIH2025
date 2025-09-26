@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civic Star Certificate Preview</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .certificate-container {
+            background: white;
+            max-width: 800px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .certificate-border {
+            border: 8px solid #ffd700;
+            border-radius: 12px;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, #ffd700 2px, transparent 2px),
+                radial-gradient(circle at 75% 25%, #ffd700 2px, transparent 2px),
+                radial-gradient(circle at 25% 75%, #ffd700 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, #ffd700 2px, transparent 2px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .certificate-content {
+            padding: 40px 60px;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(145deg, #ffffff 0%, #f8faff 100%);
+        }
+
+        .certificate-header {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .municipal-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .municipal-logo i {
+            font-size: 40px;
+            color: white;
+        }
+
+        .municipal-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c3e50;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .municipal-subtitle {
+            font-size: 14px;
+            color: #7f8c8d;
+            font-weight: 500;
+        }
+
+        .certificate-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .certificate-title::after {
+            content: '';
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .certificate-subtitle {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .recipient-section {
+            margin: 40px 0;
+        }
+
+        .recipient-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: #667eea;
+            margin: 20px 0;
+            text-decoration: underline;
+            text-decoration-color: #ffd700;
+            text-decoration-thickness: 3px;
+            text-underline-offset: 8px;
+        }
+
+        .achievement-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #2c3e50;
+            margin: 30px 0;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .certificate-details {
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #ffd700;
+        }
+
+        .signature-section {
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 200px;
+            height: 2px;
+            background: #2c3e50;
+            margin: 20px auto 10px;
+        }
+
+        .signature-title {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .signature-subtitle {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .certificate-seal {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ffd700 0%, #ff6b6b 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .certificate-seal::before {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border: 3px solid white;
+            border-radius: 50%;
+        }
+
+        .certificate-seal i {
+            font-size: 32px;
+            color: white;
+            z-index: 1;
+        }
+
+        .star-decoration {
+            position: absolute;
+            color: #ffd700;
+            opacity: 0.6;
+            animation: sparkle 3s infinite;
+        }
+
+        .star-1 { top: 20px; left: 20px; font-size: 20px; animation-delay: 0s; }
+        .star-2 { top: 20px; right: 20px; font-size: 16px; animation-delay: 1s; }
+        .star-3 { bottom: 20px; left: 20px; font-size: 18px; animation-delay: 2s; }
+        .star-4 { bottom: 20px; right: 20px; font-size: 22px; animation-delay: 0.5s; }
+        .star-5 { top: 50%; left: 20px; font-size: 14px; animation-delay: 1.5s; }
+        .star-6 { top: 50%; right: 20px; font-size: 16px; animation-delay: 2.5s; }
+
+        @keyframes sparkle {
+            0%, 100% { 
+                opacity: 0.3; 
+                transform: scale(1) rotate(0deg); 
+            }
+            50% { 
+                opacity: 1; 
+                transform: scale(1.2) rotate(180deg); 
+            }
+        }
+
+        .download-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn.secondary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .download-section {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .certificate-content {
+                padding: 30px 30px;
+            }
+            
+            .certificate-title {
+                font-size: 36px;
+            }
+            
+            .recipient-name {
+                font-size: 28px;
+            }
+            
+            .achievement-text {
+                font-size: 16px;
+            }
+            
+            .certificate-footer {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate-container">
+        <!-- Star Decorations -->
+        <i class="fas fa-star star-decoration star-1"></i>
+        <i class="fas fa-star star-decoration star-2"></i>
+        <i class="fas fa-star star-decoration star-3"></i>
+        <i class="fas fa-star star-decoration star-4"></i>
+        <i class="fas fa-star star-decoration star-5"></i>
+        <i class="fas fa-star star-decoration star-6"></i>
+
+        <div class="certificate-border">
+            <div class="certificate-content">
+                <!-- Header -->
+                <div class="certificate-header">
+                    <div class="municipal-logo">
+                        <i class="fas fa-city"></i>
+                    </div>
+                    <div class="municipal-title">Municipal Government</div>
+                    <div class="municipal-subtitle">City of Excellence • Community First</div>
+                </div>
+
+                <!-- Certificate Title -->
+                <h1 class="certificate-title">Certificate of Appreciation</h1>
+                <p class="certificate-subtitle">This certificate is awarded to</p>
+
+                <!-- Recipient -->
+                <div class="recipient-section">
+                    <h2 class="recipient-name">Sarah Johnson</h2>
+                </div>
+
+                <!-- Achievement Text -->
+                <p class="achievement-text">
+                    For outstanding civic contribution and active participation in making our community safer and better. 
+                    Your vigilant reporting of municipal issues and dedication to civic engagement exemplifies the spirit 
+                    of responsible citizenship that makes our city thrive.
+                </p>
+
+                <!-- Certificate Details -->
+                <div class="certificate-details">
+                    <div class="detail-row">
+                        <span class="detail-label">Recognition Type:</span>
+                        <span>🌟 Civic Star Award</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Issue Reference:</span>
+                        <span>#2024-0156 - Pothole Report</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Date Issued:</span>
+                        <span id="certificateDate"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Reports Filed:</span>
+                        <span>12 Successful Reports</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Issues Resolved:</span>
+                        <span>8 Community Improvements</span>
+                    </div>
+                </div>
+
+                <!-- Footer with Signatures -->
+                <div class="certificate-footer">
+                    <div class="signature-section">
+                        <div class="signature-line"></div>
+                        <div class="signature-title">John Smith</div>
+                        <div class="signature-subtitle">Municipal Administrator</div>
+                    </div>
+
+                    <div class="certificate-seal">
+                        <i class="fas fa-medal"></i>
+                    </div>
+
+                    <div class="signature-section">
+                        <div class="signature-line"></div>
+                        <div class="signature-title">City Council</div>
+                        <div class="signature-subtitle">Official Seal</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Section -->
+        <div class="download-section">
+            <h3 style="margin-bottom: 15px; color: #2c3e50;">Certificate Actions</h3>
+            <button class="download-btn" onclick="window.print()">
+                <i class="fas fa-print"></i>
+                Print Certificate
+            </button>
+            <button class="download-btn secondary" onclick="downloadAsPDF()">
+                <i class="fas fa-download"></i>
+                Download PDF
+            </button>
+            <button class="download-btn" onclick="shareOnSocial()" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">
+                <i class="fas fa-share-alt"></i>
+                Share Achievement
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateElement = document.getElementById('certificateDate');
+            const today = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                weekday: 'long'
+            };
+            dateElement.textContent = today.toLocaleDateString('en-US', options);
+        });
+
+        function downloadAsPDF() {
+            // In a real implementation, this would generate a PDF
+            alert('🎉 PDF generation feature coming soon!\n\nFor now, you can use the Print function and select "Save as PDF" from your browser\'s print dialog.');
+        }
+
+        function shareOnSocial() {
+            const text = "🌟 I've been recognized as a Civic Star for my community contributions! Proud to help make our city better. #CivicStar #CommunityFirst";
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Civic Star Achievement',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback for browsers without native sharing
+                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+                window.open(twitterUrl, '_blank', 'width=550,height=420');
+            }
+        }
+
+        // Add some interactive sparkle effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const certificateContainer = document.querySelector('.certificate-container');
+            
+            certificateContainer.addEventListener('mousemove', function(e) {
+                const stars = document.querySelectorAll('.star-decoration');
+                const rect = certificateContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                stars.forEach((star, index) => {
+                    const delay = index * 100;
+                    setTimeout(() => {
+                        star.style.transform = `translate(${x * 0.01}px, ${y * 0.01}px) scale(1.1) rotate(${x * 0.1}deg)`;
+                    }, delay);
+                });
+            });
+            
+            certificateContainer.addEventListener('mouseleave', function() {
+                const stars = document.querySelectorAll('.star-decoration');
+                stars.forEach(star => {
+                    star.style.transform = 'translate(0px, 0px) scale(1) rotate(0deg)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

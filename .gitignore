@@ -1,0 +1,22 @@
+# Flutter & Dart
+**/build/
+**/.dart_tool/
+**/.packages
+**/pubspec.lock
+
+# Node / Web
+**/node_modules/
+**/dist/
+**/.next/
+**/.nuxt/
+**/.angular/
+**/.cache/
+
+# IDEs & Editors
+.vscode/
+.idea/
+*.iml
+
+# OS Files
+.DS_Store
+Thumbs.db

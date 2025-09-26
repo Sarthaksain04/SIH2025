@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Civic Admin Dashboard - Municipal Issue Management</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-city"></i>
+                    <span>CivicAdmin</span>
+                </div>
+                <div class="admin-profile">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" alt="Admin" class="profile-pic">
+                    <div class="profile-info">
+                        <span class="name">John Smith</span>
+                        <span class="role">Municipal Admin</span>
+                    </div>
+                </div>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">
+                    <a href="#dashboard">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <a href="#reports">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Active Reports</span>
+                        <span class="badge">24</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="map">
+                    <a href="#map">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Live Map</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="departments">
+                    <a href="#departments">
+                        <i class="fas fa-building"></i>
+                        <span>Departments</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="analytics">
+                    <a href="#analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="settings">
+                    <a href="#settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="help-section">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Need Help?</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 class="page-title">Dashboard Overview</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search reports, locations...">
+                    </div>
+                    
+                    <div class="header-actions">
+                        <button class="notification-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-count">3</span>
+                        </button>
+                        
+                        <div class="quick-filters">
+                            <select class="filter-select">
+                                <option>All Departments</option>
+                                <option>Public Works</option>
+                                <option>Sanitation</option>
+                                <option>Transportation</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="content-wrapper">
+                <!-- Dashboard Page -->
+                <div class="page-content active" id="dashboard-page">
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card urgent">
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>24</h3>
+                                <p>Urgent Issues</p>
+                                <div class="trend up">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+12% from yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card active">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>156</h3>
+                                <p>Active Reports</p>
+                                <div class="trend up">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8% this week</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card resolved">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>342</h3>
+                                <p>Resolved Today</p>
+                                <div class="trend up">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+23% efficiency</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card response">
+                            <div class="stat-icon">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>2.4h</h3>
+                                <p>Avg Response Time</p>
+                                <div class="trend down">
+                                    <i class="fas fa-arrow-down"></i>
+                                    <span>-15% improvement</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts and Recent Activity -->
+                    <div class="dashboard-grid">
+                        <div class="chart-card">
+                            <div class="card-header">
+                                <h3>Issues by Category</h3>
+                                <div class="card-actions">
+                                    <button class="btn-secondary">
+                                        <i class="fas fa-download"></i>
+                                        Export
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-card">
+                            <div class="card-header">
+                                <h3>Response Time Trends</h3>
+                                <div class="time-filters">
+                                    <button class="time-btn active">7D</button>
+                                    <button class="time-btn">30D</button>
+                                    <button class="time-btn">90D</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="responseChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-card">
+                            <div class="card-header">
+                                <h3>Recent Activity</h3>
+                                <button class="btn-link">View All</button>
+                            </div>
+                            <div class="activity-feed">
+                                <div class="activity-item">
+                                    <div class="activity-avatar pothole">
+                                        <i class="fas fa-road"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Pothole reported</strong> on Main St & 5th Ave</p>
+                                        <span class="timestamp">2 minutes ago</span>
+                                    </div>
+                                    <span class="status-badge new">New</span>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-avatar streetlight">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Streetlight issue</strong> assigned to Public Works</p>
+                                        <span class="timestamp">15 minutes ago</span>
+                                    </div>
+                                    <span class="status-badge assigned">Assigned</span>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-avatar trash">
+                                        <i class="fas fa-trash"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Trash overflow</strong> resolved by Sanitation</p>
+                                        <span class="timestamp">1 hour ago</span>
+                                    </div>
+                                    <span class="status-badge resolved">Resolved</span>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-avatar graffiti">
+                                        <i class="fas fa-spray-can"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Graffiti removal</strong> in progress at Park Avenue</p>
+                                        <span class="timestamp">2 hours ago</span>
+                                    </div>
+                                    <span class="status-badge progress">In Progress</span>
+                                </div>
+                                
+                                <div class="activity-item">
+                                    <div class="activity-avatar noise">
+                                        <i class="fas fa-volume-up"></i>
+                                    </div>
+                                    <div class="activity-content">
+                                        <p><strong>Noise complaint</strong> verified and escalated</p>
+                                        <span class="timestamp">3 hours ago</span>
+                                    </div>
+                                    <span class="status-badge escalated">Escalated</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div class="page-content" id="reports-page">
+                    <div class="reports-header">
+                        <div class="reports-filters">
+                            <div class="filter-group">
+                                <label>Category</label>
+                                <select class="filter-select">
+                                    <option>All Categories</option>
+                                    <option>Potholes</option>
+                                    <option>Streetlights</option>
+                                    <option>Trash/Sanitation</option>
+                                    <option>Graffiti</option>
+                                    <option>Noise</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label>Priority</label>
+                                <select class="filter-select">
+                                    <option>All Priorities</option>
+                                    <option>Critical</option>
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label>Status</label>
+                                <select class="filter-select">
+                                    <option>All Status</option>
+                                    <option>New</option>
+                                    <option>Assigned</option>
+                                    <option>In Progress</option>
+                                    <option>Resolved</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label>Date Range</label>
+                                <input type="date" class="filter-input">
+                                <span>to</span>
+                                <input type="date" class="filter-input">
+                            </div>
+                        </div>
+                        
+                        <div class="reports-actions">
+                            <button class="btn-secondary">
+                                <i class="fas fa-download"></i>
+                                Export Reports
+                            </button>
+                            <button class="btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Add Manual Report
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="reports-table-container">
+                        <table class="reports-table">
+                            <thead>
+                                <tr>
+                                    <th><input type="checkbox"></th>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Category</th>
+                                    <th>Location</th>
+                                    <th>Reporter</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Reported</th>
+                                    <th>Assigned To</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>#2024-0156</td>
+                                    <td>
+                                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=40&h=40&fit=crop" alt="Issue" class="issue-thumbnail">
+                                    </td>
+                                    <td>
+                                        <div class="category-tag pothole">
+                                            <i class="fas fa-road"></i>
+                                            Pothole
+                                        </div>
+                                    </td>
+                                    <td>Main St & 5th Ave</td>
+                                    <td>
+                                        <div class="reporter-info">
+                                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b8e6?w=32&h=32&fit=crop&crop=face" alt="Reporter" class="reporter-avatar">
+                                            <div class="reporter-details">
+                                                <span class="reporter-name">Sarah Johnson</span>
+                                                <span class="reporter-contact">sarah.j@email.com</span>
+                                            </div>
+                                            <span class="verified-badge" title="Verified Citizen">
+                                                <i class="fas fa-check-circle"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td><span class="priority-badge critical">Critical</span></td>
+                                    <td><span class="status-badge new">New</span></td>
+                                    <td>2 mins ago</td>
+                                    <td>-</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon assign" title="Assign">
+                                                <i class="fas fa-user-plus"></i>
+                                            </button>
+                                            <button class="btn-icon contact" title="Contact Reporter">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                            <button class="btn-icon more" title="More Options">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>#2024-0155</td>
+                                    <td>
+                                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=40&h=40&fit=crop" alt="Issue" class="issue-thumbnail">
+                                    </td>
+                                    <td>
+                                        <div class="category-tag streetlight">
+                                            <i class="fas fa-lightbulb"></i>
+                                            Streetlight
+                                        </div>
+                                    </td>
+                                    <td>Oak Street, Block 12</td>
+                                    <td>
+                                        <div class="reporter-info">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" alt="Reporter" class="reporter-avatar">
+                                            <div class="reporter-details">
+                                                <span class="reporter-name">Michael Davis</span>
+                                                <span class="reporter-contact">+1 (555) 0123</span>
+                                            </div>
+                                            <span class="verified-badge" title="Verified Citizen">
+                                                <i class="fas fa-check-circle"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td><span class="priority-badge high">High</span></td>
+                                    <td><span class="status-badge assigned">Assigned</span></td>
+                                    <td>15 mins ago</td>
+                                    <td>Public Works</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon assign" title="Reassign">
+                                                <i class="fas fa-user-edit"></i>
+                                            </button>
+                                            <button class="btn-icon contact" title="Contact Reporter">
+                                                <i class="fas fa-phone"></i>
+                                            </button>
+                                            <button class="btn-icon more" title="More Options">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><input type="checkbox"></td>
+                                    <td>#2024-0154</td>
+                                    <td>
+                                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=40&h=40&fit=crop" alt="Issue" class="issue-thumbnail">
+                                    </td>
+                                    <td>
+                                        <div class="category-tag trash">
+                                            <i class="fas fa-trash"></i>
+                                            Sanitation
+                                        </div>
+                                    </td>
+                                    <td>Central Park, Entrance</td>
+                                    <td>
+                                        <div class="reporter-info">
+                                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" alt="Reporter" class="reporter-avatar">
+                                            <div class="reporter-details">
+                                                <span class="reporter-name">Emma Wilson</span>
+                                                <span class="reporter-contact">emma.w@email.com</span>
+                                            </div>
+                                            <span class="unverified-badge" title="Unverified User">
+                                                <i class="fas fa-question-circle"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td><span class="priority-badge medium">Medium</span></td>
+                                    <td><span class="status-badge progress">In Progress</span></td>
+                                    <td>1 hour ago</td>
+                                    <td>Sanitation Dept</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn-icon view" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon update" title="Update Status">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon contact" title="Contact Reporter">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                            <button class="btn-icon more" title="More Options">
+                                                <i class="fas fa-ellipsis-v"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <span class="pagination-info">Showing 1-10 of 156 reports</span>
+                        <button class="pagination-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Map Page -->
+                <div class="page-content" id="map-page">
+                    <div class="map-container">
+                        <div id="issueMap"></div>
+                        <div class="map-legend">
+                            <h4>Issue Categories</h4>
+                            <div class="legend-item">
+                                <span class="legend-marker pothole"></span>
+                                <span>Potholes</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker streetlight"></span>
+                                <span>Streetlights</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker trash"></span>
+                                <span>Sanitation</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-marker graffiti"></span>
+                                <span>Graffiti</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Departments Page -->
+                <div class="page-content" id="departments-page">
+                    <!-- Department Overview Cards -->
+                    <div class="department-grid">
+                        <div class="department-card public-works">
+                            <div class="department-header">
+                                <div class="department-icon">
+                                    <i class="fas fa-tools"></i>
+                                </div>
+                                <div class="department-info">
+                                    <h3>Public Works</h3>
+                                    <p>Infrastructure & Maintenance</p>
+                                </div>
+                                <div class="department-status active">
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="department-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">34</span>
+                                    <span class="stat-label">Active Issues</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">2.1h</span>
+                                    <span class="stat-label">Avg Response</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">12</span>
+                                    <span class="stat-label">Staff Members</span>
+                                </div>
+                            </div>
+                            <div class="department-actions">
+                                <button class="btn-primary">View Details</button>
+                                <button class="btn-secondary">Manage Staff</button>
+                            </div>
+                        </div>
+
+                        <div class="department-card sanitation">
+                            <div class="department-header">
+                                <div class="department-icon">
+                                    <i class="fas fa-recycle"></i>
+                                </div>
+                                <div class="department-info">
+                                    <h3>Sanitation</h3>
+                                    <p>Waste Management & Cleanup</p>
+                                </div>
+                                <div class="department-status active">
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="department-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">28</span>
+                                    <span class="stat-label">Active Issues</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">1.8h</span>
+                                    <span class="stat-label">Avg Response</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">18</span>
+                                    <span class="stat-label">Staff Members</span>
+                                </div>
+                            </div>
+                            <div class="department-actions">
+                                <button class="btn-primary">View Details</button>
+                                <button class="btn-secondary">Manage Staff</button>
+                            </div>
+                        </div>
+
+                        <div class="department-card transportation">
+                            <div class="department-header">
+                                <div class="department-icon">
+                                    <i class="fas fa-road"></i>
+                                </div>
+                                <div class="department-info">
+                                    <h3>Transportation</h3>
+                                    <p>Traffic & Road Safety</p>
+                                </div>
+                                <div class="department-status active">
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="department-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">15</span>
+                                    <span class="stat-label">Active Issues</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">3.2h</span>
+                                    <span class="stat-label">Avg Response</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">8</span>
+                                    <span class="stat-label">Staff Members</span>
+                                </div>
+                            </div>
+                            <div class="department-actions">
+                                <button class="btn-primary">View Details</button>
+                                <button class="btn-secondary">Manage Staff</button>
+                            </div>
+                        </div>
+
+                        <div class="department-card parks">
+                            <div class="department-header">
+                                <div class="department-icon">
+                                    <i class="fas fa-tree"></i>
+                                </div>
+                                <div class="department-info">
+                                    <h3>Parks & Recreation</h3>
+                                    <p>Green Spaces & Facilities</p>
+                                </div>
+                                <div class="department-status active">
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="department-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">22</span>
+                                    <span class="stat-label">Active Issues</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">2.7h</span>
+                                    <span class="stat-label">Avg Response</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">15</span>
+                                    <span class="stat-label">Staff Members</span>
+                                </div>
+                            </div>
+                            <div class="department-actions">
+                                <button class="btn-primary">View Details</button>
+                                <button class="btn-secondary">Manage Staff</button>
+                            </div>
+                        </div>
+
+                        <div class="department-card utilities">
+                            <div class="department-header">
+                                <div class="department-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div class="department-info">
+                                    <h3>Utilities</h3>
+                                    <p>Water, Power & Communications</p>
+                                </div>
+                                <div class="department-status active">
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="department-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">19</span>
+                                    <span class="stat-label">Active Issues</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">1.5h</span>
+                                    <span class="stat-label">Avg Response</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">25</span>
+                                    <span class="stat-label">Staff Members</span>
+                                </div>
+                            </div>
+                            <div class="department-actions">
+                                <button class="btn-primary">View Details</button>
+                                <button class="btn-secondary">Manage Staff</button>
+                            </div>
+                        </div>
+
+                        <div class="department-card emergency">
+                            <div class="department-header">
+                                <div class="department-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="department-info">
+                                    <h3>Emergency Services</h3>
+                                    <p>Fire, Police & Medical</p>
+                                </div>
+                                <div class="department-status active">
+                                    <span>Active</span>
+                                </div>
+                            </div>
+                            <div class="department-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">7</span>
+                                    <span class="stat-label">Active Issues</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">0.5h</span>
+                                    <span class="stat-label">Avg Response</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">45</span>
+                                    <span class="stat-label">Staff Members</span>
+                                </div>
+                            </div>
+                            <div class="department-actions">
+                                <button class="btn-primary">View Details</button>
+                                <button class="btn-secondary">Manage Staff</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Department Performance Chart -->
+                    <div class="department-performance">
+                        <div class="performance-card">
+                            <div class="card-header">
+                                <h3>Department Performance Comparison</h3>
+                                <div class="time-filters">
+                                    <button class="time-btn active">This Week</button>
+                                    <button class="time-btn">This Month</button>
+                                    <button class="time-btn">This Quarter</button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="departmentChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Staff Management Section -->
+                    <div class="staff-management">
+                        <div class="staff-header">
+                            <h3>Staff Overview</h3>
+                            <button class="btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Add Staff Member
+                            </button>
+                        </div>
+                        <div class="staff-grid">
+                            <div class="staff-card">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="Staff" class="staff-photo">
+                                <div class="staff-info">
+                                    <h4>John Martinez</h4>
+                                    <p>Public Works Supervisor</p>
+                                    <span class="staff-status online">Online</span>
+                                </div>
+                                <div class="staff-stats">
+                                    <div class="stat">12 <span>Active</span></div>
+                                    <div class="stat">85 <span>Resolved</span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="staff-card">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b8e6?w=60&h=60&fit=crop&crop=face" alt="Staff" class="staff-photo">
+                                <div class="staff-info">
+                                    <h4>Sarah Johnson</h4>
+                                    <p>Sanitation Manager</p>
+                                    <span class="staff-status online">Online</span>
+                                </div>
+                                <div class="staff-stats">
+                                    <div class="stat">8 <span>Active</span></div>
+                                    <div class="stat">92 <span>Resolved</span></div>
+                                </div>
+                            </div>
+                            
+                            <div class="staff-card">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" alt="Staff" class="staff-photo">
+                                <div class="staff-info">
+                                    <h4>Mike Chen</h4>
+                                    <p>Transportation Coordinator</p>
+                                    <span class="staff-status away">Away</span>
+                                </div>
+                                <div class="staff-stats">
+                                    <div class="stat">5 <span>Active</span></div>
+                                    <div class="stat">67 <span>Resolved</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analytics Page -->
+                <div class="page-content" id="analytics-page">
+                    <!-- Analytics Overview -->
+                    <div class="analytics-overview">
+                        <div class="overview-card">
+                            <div class="overview-icon trend-up">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h3>Response Time</h3>
+                                <p class="overview-value">2.4h</p>
+                                <p class="overview-change positive">↓ 15% from last month</p>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="overview-icon resolution">
+                                <i class="fas fa-check-double"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h3>Resolution Rate</h3>
+                                <p class="overview-value">87.5%</p>
+                                <p class="overview-change positive">↑ 5.2% from last month</p>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="overview-icon satisfaction">
+                                <i class="fas fa-smile"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h3>Citizen Satisfaction</h3>
+                                <p class="overview-value">4.3/5</p>
+                                <p class="overview-change positive">↑ 0.3 from last month</p>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <div class="overview-icon efficiency">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                            <div class="overview-content">
+                                <h3>Department Efficiency</h3>
+                                <p class="overview-value">92.1%</p>
+                                <p class="overview-change positive">↑ 3.7% from last month</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Charts Section -->
+                    <div class="analytics-charts">
+                        <div class="chart-row">
+                            <div class="chart-card analytics-chart">
+                                <div class="card-header">
+                                    <h3>Issue Volume Trends</h3>
+                                    <select class="chart-filter">
+                                        <option>Last 30 Days</option>
+                                        <option>Last 90 Days</option>
+                                        <option>Last Year</option>
+                                    </select>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="volumeTrendsChart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-card analytics-chart">
+                                <div class="card-header">
+                                    <h3>Resolution Time Distribution</h3>
+                                    <select class="chart-filter">
+                                        <option>All Departments</option>
+                                        <option>Public Works</option>
+                                        <option>Sanitation</option>
+                                    </select>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="resolutionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-row">
+                            <div class="chart-card analytics-chart">
+                                <div class="card-header">
+                                    <h3>Geographic Heat Map</h3>
+                                    <div class="heatmap-controls">
+                                        <button class="heat-btn active">All Issues</button>
+                                        <button class="heat-btn">Critical Only</button>
+                                        <button class="heat-btn">By Department</button>
+                                    </div>
+                                </div>
+                                <div class="heatmap-container">
+                                    <div id="analyticsMap"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-card analytics-chart">
+                                <div class="card-header">
+                                    <h3>Citizen Satisfaction Trends</h3>
+                                    <div class="satisfaction-legend">
+                                        <span class="legend-item">Very Satisfied</span>
+                                        <span class="legend-item">Satisfied</span>
+                                        <span class="legend-item">Neutral</span>
+                                        <span class="legend-item">Dissatisfied</span>
+                                    </div>
+                                </div>
+                                <div class="chart-container">
+                                    <canvas id="satisfactionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Predictive Analytics -->
+                    <div class="predictive-analytics">
+                        <div class="prediction-card">
+                            <div class="card-header">
+                                <h3>AI-Powered Insights & Predictions</h3>
+                                <span class="beta-tag">BETA</span>
+                            </div>
+                            <div class="predictions-grid">
+                                <div class="prediction-item">
+                                    <div class="prediction-icon warning">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div class="prediction-content">
+                                        <h4>Seasonal Trend Alert</h4>
+                                        <p>Pothole reports typically increase by 35% in the next 2 weeks due to weather patterns.</p>
+                                        <span class="confidence">Confidence: 89%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="prediction-item">
+                                    <div class="prediction-icon info">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div class="prediction-content">
+                                        <h4>Resource Optimization</h4>
+                                        <p>Consider reallocating 2 staff members from Parks to Public Works for optimal efficiency.</p>
+                                        <span class="confidence">Confidence: 76%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="prediction-item">
+                                    <div class="prediction-icon success">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="prediction-content">
+                                        <h4>Performance Forecast</h4>
+                                        <p>Current trends suggest 12% improvement in overall response times by month-end.</p>
+                                        <span class="confidence">Confidence: 82%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Metrics -->
+                    <div class="performance-metrics">
+                        <div class="metrics-header">
+                            <h3>Department Performance Scorecard</h3>
+                            <button class="btn-secondary">
+                                <i class="fas fa-download"></i>
+                                Export Report
+                            </button>
+                        </div>
+                        <div class="scorecard-table">
+                            <table class="performance-table">
+                                <thead>
+                                    <tr>
+                                        <th>Department</th>
+                                        <th>Response Time</th>
+                                        <th>Resolution Rate</th>
+                                        <th>Satisfaction</th>
+                                        <th>Efficiency Score</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="performance-row excellent">
+                                        <td>
+                                            <div class="dept-info">
+                                                <i class="fas fa-shield-alt"></i>
+                                                <span>Emergency Services</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="metric-value">0.5h</span></td>
+                                        <td><span class="metric-value">98.2%</span></td>
+                                        <td><span class="metric-value">4.8/5</span></td>
+                                        <td><span class="score-badge excellent">A+</span></td>
+                                        <td><span class="trend-indicator up"><i class="fas fa-arrow-up"></i></span></td>
+                                    </tr>
+                                    <tr class="performance-row good">
+                                        <td>
+                                            <div class="dept-info">
+                                                <i class="fas fa-bolt"></i>
+                                                <span>Utilities</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="metric-value">1.5h</span></td>
+                                        <td><span class="metric-value">94.7%</span></td>
+                                        <td><span class="metric-value">4.5/5</span></td>
+                                        <td><span class="score-badge good">A</span></td>
+                                        <td><span class="trend-indicator up"><i class="fas fa-arrow-up"></i></span></td>
+                                    </tr>
+                                    <tr class="performance-row good">
+                                        <td>
+                                            <div class="dept-info">
+                                                <i class="fas fa-recycle"></i>
+                                                <span>Sanitation</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="metric-value">1.8h</span></td>
+                                        <td><span class="metric-value">92.1%</span></td>
+                                        <td><span class="metric-value">4.3/5</span></td>
+                                        <td><span class="score-badge good">A-</span></td>
+                                        <td><span class="trend-indicator up"><i class="fas fa-arrow-up"></i></span></td>
+                                    </tr>
+                                    <tr class="performance-row average">
+                                        <td>
+                                            <div class="dept-info">
+                                                <i class="fas fa-tools"></i>
+                                                <span>Public Works</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="metric-value">2.1h</span></td>
+                                        <td><span class="metric-value">89.3%</span></td>
+                                        <td><span class="metric-value">4.1/5</span></td>
+                                        <td><span class="score-badge average">B+</span></td>
+                                        <td><span class="trend-indicator stable"><i class="fas fa-minus"></i></span></td>
+                                    </tr>
+                                    <tr class="performance-row average">
+                                        <td>
+                                            <div class="dept-info">
+                                                <i class="fas fa-tree"></i>
+                                                <span>Parks & Recreation</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="metric-value">2.7h</span></td>
+                                        <td><span class="metric-value">85.6%</span></td>
+                                        <td><span class="metric-value">4.0/5</span></td>
+                                        <td><span class="score-badge average">B</span></td>
+                                        <td><span class="trend-indicator up"><i class="fas fa-arrow-up"></i></span></td>
+                                    </tr>
+                                    <tr class="performance-row needs-improvement">
+                                        <td>
+                                            <div class="dept-info">
+                                                <i class="fas fa-road"></i>
+                                                <span>Transportation</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="metric-value">3.2h</span></td>
+                                        <td><span class="metric-value">78.9%</span></td>
+                                        <td><span class="metric-value">3.7/5</span></td>
+                                        <td><span class="score-badge needs-improvement">C+</span></td>
+                                        <td><span class="trend-indicator down"><i class="fas fa-arrow-down"></i></span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="page-content" id="settings-page">
+                    <h2>System Settings</h2>
+                    <p>System configuration options coming soon...</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal for Report Details -->
+    <div class="modal-overlay" id="reportModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Report Details</h3>
+                <button class="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="report-details">
+                    <div class="report-image">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop" alt="Issue">
+                    </div>
+                    <div class="report-info">
+                        <h4>Pothole on Main Street</h4>
+                        <p><strong>Location:</strong> Main St & 5th Ave</p>
+                        <p><strong>Reporter:</strong> Sarah Johnson</p>
+                        <p><strong>Description:</strong> Large pothole causing traffic issues and potential vehicle damage.</p>
+                        <p><strong>Priority:</strong> <span class="priority-badge critical">Critical</span></p>
+                        <p><strong>Status:</strong> <span class="status-badge new">New</span></p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary">View Location</button>
+                    <button class="btn-primary">Assign to Department</button>
+                    <button class="btn-success civic-star-btn" onclick="openCivicStarModal()">
+                        <i class="fas fa-star"></i>
+                        Mark as Civic Star
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Civic Star Appreciation Modal -->
+    <div class="modal-overlay" id="civicStarModal">
+        <div class="modal civic-star-modal">
+            <div class="modal-header civic-star-header">
+                <div class="civic-star-title">
+                    <i class="fas fa-star civic-star-icon"></i>
+                    <h3>Civic Star Appreciation</h3>
+                </div>
+                <button class="modal-close" onclick="closeCivicStarModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="civic-star-content">
+                    <!-- Reporter Profile Section -->
+                    <div class="civic-reporter-profile">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b8e6?w=80&h=80&fit=crop&crop=face" alt="Civic Star" class="civic-reporter-avatar">
+                        <div class="civic-reporter-details">
+                            <h4>Sarah Johnson</h4>
+                            <p>sarah.j@email.com</p>
+                            <div class="civic-stats">
+                                <span class="civic-stat">12 Reports Filed</span>
+                                <span class="civic-stat">8 Issues Resolved</span>
+                                <span class="civic-stat">Community Hero</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appreciation Type Selection -->
+                    <div class="appreciation-section">
+                        <h5>Recognition Type</h5>
+                        <div class="appreciation-options">
+                            <div class="appreciation-option active" data-type="civic-star">
+                                <i class="fas fa-star"></i>
+                                <span>Civic Star Award</span>
+                                <p>For outstanding civic contribution</p>
+                            </div>
+                            <div class="appreciation-option" data-type="community-hero">
+                                <i class="fas fa-medal"></i>
+                                <span>Community Hero</span>
+                                <p>For exceptional community service</p>
+                            </div>
+                            <div class="appreciation-option" data-type="safety-champion">
+                                <i class="fas fa-shield"></i>
+                                <span>Safety Champion</span>
+                                <p>For reporting critical safety issues</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appreciation Message -->
+                    <div class="appreciation-message">
+                        <h5>Appreciation Message</h5>
+                        <textarea class="appreciation-text" placeholder="Write a personalized message of appreciation...">Thank you for being an outstanding citizen! Your report about the pothole on Main St & 5th Ave has been successfully resolved. Your active participation helps make our community safer and better for everyone.</textarea>
+                    </div>
+
+                    <!-- Reward Selection -->
+                    <div class="reward-section">
+                        <h5>Additional Rewards</h5>
+                        <div class="reward-grid">
+                            <label class="reward-item">
+                                <input type="checkbox" class="reward-checkbox" value="certificate">
+                                <div class="reward-content">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>Digital Certificate</span>
+                                </div>
+                            </label>
+                            <label class="reward-item">
+                                <input type="checkbox" class="reward-checkbox" value="public-recognition">
+                                <div class="reward-content">
+                                    <i class="fas fa-bullhorn"></i>
+                                    <span>Public Recognition</span>
+                                </div>
+                            </label>
+                            <label class="reward-item">
+                                <input type="checkbox" class="reward-checkbox" value="newsletter">
+                                <div class="reward-content">
+                                    <i class="fas fa-newspaper"></i>
+                                    <span>Newsletter Feature</span>
+                                </div>
+                            </label>
+                            <label class="reward-item">
+                                <input type="checkbox" class="reward-checkbox" value="social-media">
+                                <div class="reward-content">
+                                    <i class="fas fa-share-alt"></i>
+                                    <span>Social Media Post</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Certificate Preview -->
+                    <div class="certificate-preview" id="certificatePreview" style="display: none;">
+                        <h5>Certificate Preview</h5>
+                        <div class="certificate-mock">
+                            <div class="certificate-header">
+                                <i class="fas fa-city certificate-logo"></i>
+                                <h6>Municipal Government</h6>
+                            </div>
+                            <div class="certificate-body">
+                                <h3>Certificate of Appreciation</h3>
+                                <p>This certificate is awarded to</p>
+                                <h4 class="certificate-name">Sarah Johnson</h4>
+                                <p class="certificate-text">For outstanding civic contribution and active participation in making our community better</p>
+                                <div class="certificate-details">
+                                    <p>Issue #2024-0156 - Pothole Report</p>
+                                    <p>Date: <span id="certificateDate"></span></p>
+                                </div>
+                                <div class="certificate-signature">
+                                    <p>Municipal Administrator</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions civic-actions">
+                    <button class="btn-secondary" onclick="closeCivicStarModal()">Cancel</button>
+                    <button class="btn-primary preview-btn" onclick="previewAppreciation()">Preview</button>
+                    <button class="btn-success send-btn" onclick="sendAppreciation()">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Appreciation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Civic Stars Management Page (Hidden by default) -->
+    <div class="page-content" id="civic-stars-page" style="display: none;">
+        <div class="civic-stars-header">
+            <h2>🌟 Civic Stars Hall of Fame</h2>
+            <p>Celebrating our community champions who make a difference</p>
+        </div>
+        
+        <div class="civic-stars-stats">
+            <div class="civic-stat-card">
+                <div class="civic-stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="civic-stat-content">
+                    <h3>47</h3>
+                    <p>Total Civic Stars</p>
+                </div>
+            </div>
+            <div class="civic-stat-card">
+                <div class="civic-stat-icon">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <div class="civic-stat-content">
+                    <h3>23</h3>
+                    <p>Certificates Issued</p>
+                </div>
+            </div>
+            <div class="civic-stat-card">
+                <div class="civic-stat-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <div class="civic-stat-content">
+                    <h3>5</h3>
+                    <p>Community Heroes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="civic-stars-grid">
+            <div class="civic-star-card featured">
+                <div class="civic-star-badge">
+                    <i class="fas fa-crown"></i>
+                    <span>Community Hero</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b8e6?w=100&h=100&fit=crop&crop=face" alt="Civic Star" class="civic-star-photo">
+                <div class="civic-star-info">
+                    <h4>Sarah Johnson</h4>
+                    <p>Outstanding Community Service</p>
+                    <div class="civic-star-achievements">
+                        <span class="achievement">12 Reports</span>
+                        <span class="achievement">8 Resolved</span>
+                        <span class="achievement">Featured</span>
+                    </div>
+                </div>
+                <div class="civic-star-actions">
+                    <button class="btn-icon view-profile" title="View Profile">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="btn-icon share-star" title="Share Recognition">
+                        <i class="fas fa-share"></i>
+                    </button>
+                    <button class="btn-icon download-cert" title="Download Certificate">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="civic-star-card">
+                <div class="civic-star-badge">
+                    <i class="fas fa-star"></i>
+                    <span>Civic Star</span>
+                </div>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Civic Star" class="civic-star-photo">
+                <div class="civic-star-info">
+                    <h4>Michael Davis</h4>
+                    <p>Active Community Participation</p>
+                    <div class="civic-star-achievements">
+                        <span class="achievement">8 Reports</span>
+                        <span class="achievement">6 Resolved</span>
+                        <span class="achievement">Recent</span>
+                    </div>
+                </div>
+                <div class="civic-star-actions">
+                    <button class="btn-icon view-profile" title="View Profile">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="btn-icon share-star" title="Share Recognition">
+                        <i class="fas fa-share"></i>
+                    </button>
+                    <button class="btn-icon download-cert" title="Download Certificate">
+                        <i class="fas fa-download"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html>
